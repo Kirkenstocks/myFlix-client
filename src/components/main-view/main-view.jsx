@@ -7,6 +7,38 @@ export const MainView = () => {
 
   const [selectedMovie, setSelectedMovie] = useState(null);
 
+  //importing data from API
+  useEffect(() => {
+    fetch("https://myflixapi-3voc.onrender.com/movies")
+      .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const moviesFromApi = data.map((movie) => {
+            return {
+              title: movie.Title,
+              releaseYear: movie.ReleaseYear,
+              description: movie.Description,
+              genre:
+              {
+                Name: movie.Genre.Name,
+                Description: movie.Genre.Description
+              },
+              director: {
+                Name: movie.Director.Name,
+                Bio: movie.Director.Bio,
+                Birth: movie.Director.Birth,
+                Death: movie.Director.Death
+              },
+              imagePath: movie.ImagePath,
+              featured: movie.Featured,
+              id: movie._id
+            };
+          });
+          setMovies(moviesFromApi);
+        });
+  },[]);
+
+  //opens the MovieView for a clicked movie, includes a back button
   if (selectedMovie) {
     return (
       <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
@@ -17,6 +49,7 @@ export const MainView = () => {
     return <div>The list is empty!</div>;
   }
 
+  //displays MovieCards of loaded movies
   return (
     <div>
       {movies.map((movie) => {
