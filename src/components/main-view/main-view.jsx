@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
@@ -14,8 +15,6 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-
 
   //importing data from API
   useEffect(() => {
@@ -55,47 +54,91 @@ export const MainView = () => {
 
   //display on page
   return (
-    <Row className="justify-content-sm-center">
-      {!user ? (
-        <Col md={6}>
-          <LoginView 
-            onLoggedIn={(user, token) => {
-              setUser(user);
-              setToken(token);
-            }}
+    <BrowserRouter>
+      <Row className="justify-content-sm-center">
+        <Routes>
+          <Route 
+            path="/signup"
+            element={
+              <>
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Col md={6}>
+                    <SignupView />
+                  </Col>
+                )}
+              </>
+            }
           />
-          Login above, or sign up below
-          <SignupView />
-        </Col>
-      ) : selectedMovie ? (
-        <Col sm={8}>
-          <MovieView
-          movie={selectedMovie}
-          onBackClick={() => setSelectedMovie(null)}
+          <Route 
+            path="/login"
+            element={
+              <>
+                {user ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Col md={6}>
+                    <LoginView 
+                      onLoggedIn={(user, token) => {
+                      setUser(user);
+                      setToken(token);
+                      }}
+                    />
+                  </Col>
+                )}
+              </>
+            }
           />
-        </Col>
-      ) : movies.length === 0 ? (
-        <div>The list is empty!</div>
-      ) : (
-        <>
-          {movies.map((movie) => (
-            <Col className="mb-5" key={movie.id} md={3}>
-              <MovieCard
-                movie={movie}
-                onMovieClick={(newSelectedMovie) => {
-                  setSelectedMovie(newSelectedMovie)
-                }}
-             />
-            </Col>  
-          ))}
-          <Button className="logout-button w-25"
-          onClick={() => { 
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-          }}>Logout</Button>
-        </>
-      )}
-    </Row>
+          <Route 
+            path="/movies/:movieId"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <Col sm={8}>
+                    <MovieView movies={movies} />
+                  </Col>
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <>
+                {!user ? (
+                  <Navigate to="/login" replace />
+                ) : movies.length === 0 ? (
+                  <Col>The list is empty!</Col>
+                ) : (
+                  <>
+                    <div>
+                      {movies.map((movie) => (
+                        <Col className="mb-4" key={movie.id} md={3}>
+                          <MovieCard movie={movie} />
+                        </Col>
+                      ))}
+                    </div>
+                    <div>
+                      <Button className="logout-button w-25"
+                        onClick={() => { 
+                        setUser(null);
+                        setToken(null);
+                        localStorage.clear();
+                        }}>Logout
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </>
+            }
+          />
+        </Routes>
+      </Row>
+    </BrowserRouter>
   );
 };
