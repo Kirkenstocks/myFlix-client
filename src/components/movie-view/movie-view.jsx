@@ -1,15 +1,19 @@
 import PropTypes from "prop-types";
+import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
+import "./movie-view.scss";
 
 export const MovieView = ({ movie, onBackClick }) => {
   return (
-    <div>
+    <Row className="justify-content-center">
       <div>
-        <img src={movie.imagePath} alt="poster of the movie selected" />
+        <img 
+          src={movie.imagePath} 
+          alt="poster of the movie selected" 
+          className="w-100 mb-3" 
+        />
       </div>
-      <h4>
-        <span>Title: </span>
-        <span>{movie.title}</span>
-      </h4>
+        <h4 className="movie-title mb-3">{movie.title}</h4>
       <div>
         <span>Release Year: </span>
         <span>{movie.releaseYear}</span>
@@ -30,11 +34,12 @@ export const MovieView = ({ movie, onBackClick }) => {
         <span>Featured: </span>
         <span>{movie.featured.toString()}</span>
       </div>
-      <button onClick={onBackClick}>Back</button>
-    </div>
+      <Button onClick={onBackClick} className="back-button mt-3 w-25">Back</Button>
+    </Row>
   );
 };
 
+//Defining prop-type constraints
 MovieView.propTypes = {
   movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
