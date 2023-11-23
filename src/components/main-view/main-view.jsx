@@ -7,6 +7,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
+import { NavigationBar } from "../navigation-bar/navigation-bar"
 // import "./main-view.scss";
 
 export const MainView = () => {
@@ -55,6 +56,14 @@ export const MainView = () => {
   //display on page
   return (
     <BrowserRouter>
+      <NavigationBar
+        user={user}
+        onLoggedOut={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      />
       <Row className="justify-content-sm-center">
         <Routes>
           <Route 
@@ -116,22 +125,11 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
-                    <div>
-                      {movies.map((movie) => (
-                        <Col className="mb-4" key={movie.id} md={3}>
-                          <MovieCard movie={movie} />
-                        </Col>
-                      ))}
-                    </div>
-                    <div>
-                      <Button className="logout-button w-25"
-                        onClick={() => { 
-                        setUser(null);
-                        setToken(null);
-                        localStorage.clear();
-                        }}>Logout
-                      </Button>
-                    </div>
+                    {movies.map((movie) => (
+                      <Col className="mb-4" key={movie.id} md={3}>
+                        <MovieCard movie={movie} />
+                      </Col>
+                    ))}
                   </>
                 )}
               </>
