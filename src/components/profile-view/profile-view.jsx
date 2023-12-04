@@ -67,3 +67,7 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
     })
   }
 
+  //get a list of the user's favorite movies
+  const favoriteMovies = movies.filter(movie => user.FavoriteMovies.includes(movie.id));
+  
+ 
