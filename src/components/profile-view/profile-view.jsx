@@ -125,3 +125,12 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
           </Form.Group>
           <div className="d-flex justify-content-between">
             <Button type="submit" onClick={handleUpdate} className="update-profile-button" variant="primary">Update Info</Button>
+            <DeleteAccountModal
+              handleDelete={handleDelete}
+              className="modal-button" 
+            />
+          </div>
+             
+        </Form> 
+      </Col>
+    </Row>
