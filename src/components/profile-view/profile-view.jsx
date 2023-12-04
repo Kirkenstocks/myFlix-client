@@ -47,3 +47,23 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
     });
   };
 
+  //allow users to delete their account - need to add modal
+  const handleDelete = (event) => {
+    event.preventDefault();
+
+    fetch(`https://myflixapi-3voc.onrender.com/users/${user.Username}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${storedToken}`
+      }
+    }).then((response) => {
+      if (response.ok) {
+        {onLoggedOut};
+        alert("Account deleted successfully");
+        window.location.replace("/signup");
+      } else {
+        alert("Unable to delete account");
+      }
+    })
+  }
+
