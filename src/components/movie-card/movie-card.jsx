@@ -1,4 +1,5 @@
 import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -70,11 +71,18 @@ export const MovieCard = ({ movie, user, setUser }) => {
     <Card className="movie-card h-100">
       <Card.Img variant="top" src={movie.imagePath} />
       <Card.Body>
-        <Card.Title className="card-title">{movie.title}</Card.Title>
+        <Card.Title className="card-title text-center">{movie.title}</Card.Title>
         <Card.Text>{movie.description}</Card.Text>
-        <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-          <Button variant="link">Open</Button>
-        </Link>
+        <div className="d-flex justify-content-between">
+          <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+            <Button variant="primary" className="open-button">Open</Button>
+          </Link>
+          {!isFavorite ? (
+            <Button variant="link" className="favorite-button" onClick={addFavorite}>Favorite</Button>
+          ) : (
+            <Button variant="link" className="favorite-button" onClick={removeFavorite}>Unfavorite</Button>
+          )}
+        </div>
       </Card.Body>
     </Card>
   );
