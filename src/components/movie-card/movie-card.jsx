@@ -1,4 +1,3 @@
-import React from "react";
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
@@ -83,6 +82,7 @@ export const MovieCard = ({ movie, user, setUser }) => {
             <Button variant="link" className="favorite-button" onClick={removeFavorite}>Unfavorite</Button>
           )}
         </div>
+        
       </Card.Body>
     </Card>
   );
