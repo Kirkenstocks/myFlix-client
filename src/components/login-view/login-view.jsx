@@ -38,35 +38,38 @@ export const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username: </Form.Label>
-        <Form.Control 
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          minLength="5"
-          required 
-        />
-      </Form.Group>
+    <div>
+      <h3 className="text-center my-3">Sign In</h3>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formUsername">
+          <Form.Label>Username:</Form.Label>
+          <Form.Control 
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            minLength="5"
+            required 
+          />
+        </Form.Group>
 
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password: </Form.Label>
-        <Form.Control
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength="8"
-          required
-        />
-      </Form.Group>
-    
-      <Button
-        type="submit"
-        className="login-button"
-      >
-        Login
-      </Button>
-    </Form>
+        <Form.Group controlId="formPassword" className="my-3">
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            minLength="8"
+            required
+          />
+        </Form.Group>
+      
+        <Button
+          type="submit"
+          className="login-button"
+        >
+          Sign In
+        </Button>
+      </Form>
+    </div>
   );
 };
