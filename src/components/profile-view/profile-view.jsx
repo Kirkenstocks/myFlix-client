@@ -134,3 +134,21 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
         </Form> 
       </Col>
     </Row>
+    <Row>
+      <h3 className="mt-5 mb-3 text-center">Favorite Movies</h3>
+        {favoriteMovies.map((movie) => {
+          return (
+            <Col key={movie.id} md={4} className="mb-4">
+              <MovieCard 
+                movie={movie} 
+                user={user}
+                token={token}
+                setUser={setUser}
+              />
+            </Col>
+        )})}
+    </Row>
+    </>
+    
+  );
+};
