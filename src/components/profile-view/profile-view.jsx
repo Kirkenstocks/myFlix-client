@@ -14,3 +14,36 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
   const [birthday, setBirthday] = useState("");
   const storedToken = localStorage.getItem("token");
 
+  //allow users to update their account info
+  const handleUpdate = (event) => {
+    event.preventDefault();
+
+    const data = {
+      Username: username,
+      Password: password,
+      Email: email,
+      Birthday: birthday
+    };
+
+    fetch(`https://myflixapi-3voc.onrender.com/users/${user.Username}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        Authorization: `Bearer ${storedToken}`,
+        "Content-Type": "application/json"
+      }
+    }).then((response) => {
+      if (response.ok) {
+        alert("Profile updated successfully");
+      } else {
+        alert("Unable to update profile");
+      }
+    }).then((updatedUser) => {
+      if (updatedUser) {
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        setUser(updatedUser);
+        window.location.reload();
+      }
+    });
+  };
+
