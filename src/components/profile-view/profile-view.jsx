@@ -71,3 +71,57 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
   const favoriteMovies = movies.filter(movie => user.FavoriteMovies.includes(movie.id));
   
  
+  return (
+    <>
+      <Row>
+      <Col md={6}>
+        <h3 className="my-3 text-center">Account Information</h3>
+        
+        <Form className="update-info-form p-3" onSubmit={handleUpdate}>
+          <Form.Group controlId="formUsername">
+            <Form.Label>Username: </Form.Label>
+            <Form.Control
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              placeholder={user.Username}
+              className="mb-3"
+            />
+          </Form.Group>
+          
+          <Form.Group controlId="formPassword">
+            <Form.Label>Password: </Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              minLength="8"
+              required
+              className="mb-3"
+              />
+          </Form.Group>
+
+          <Form.Group controlId="formEmail">
+            <Form.Label>Email: </Form.Label>
+            <Form.Control
+              type="email"
+              value={email}
+              required
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={user.Email}
+              className="mb-3"
+            />
+          </Form.Group>
+
+          <Form.Group controlId="formBirthday">
+            <Form.Label>Birthday: </Form.Label> 
+            <Form.Control
+              type="date"
+              value={birthday}
+              onChange={(e) => setBirthday(e.target.value)}
+              className="mb-4"
+            />
+          </Form.Group>
+          <div className="d-flex justify-content-between">
+            <Button type="submit" onClick={handleUpdate} className="update-profile-button" variant="primary">Update Info</Button>
