@@ -41,6 +41,31 @@ export const MovieCard = ({ movie, user, setUser }) => {
     });
   };
 
+  const removeFavorite = () => {
+    fetch(`https://myflixapi-3voc.onrender.com/users/${user.Username}/movies/${movie.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${storedToken}`
+      }
+    }).then((response) => {
+      if(response.ok) {
+        return response.json();
+      } else {
+        alert("Unable to remove movie from favorites")
+      }
+    }).then((user) => {
+      if(user) {
+        alert("Movie removed from favorites");
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
+        setIsFavorite(false);
+      }
+    })
+    .catch((error) => {
+      alert(error);
+    });
+  }; 
+
   return (
     <Card className="movie-card h-100">
       <Card.Img variant="top" src={movie.imagePath} />
