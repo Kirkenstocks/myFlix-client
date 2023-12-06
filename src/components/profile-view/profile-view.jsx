@@ -47,7 +47,7 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
     });
   };
 
-  //allow users to delete their account - need to add modal
+  //allow users to delete their account
   const handleDelete = (event) => {
     event.preventDefault();
 
