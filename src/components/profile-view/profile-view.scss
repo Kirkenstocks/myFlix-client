@@ -1,0 +1,8 @@
+$primary: DeepSkyBlue;
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+.update-info-form {
+  border: 2px solid $primary;
+  border-radius: 5px;
+}
