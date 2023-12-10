@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-// import "./signup-view.scss";
+import { Link } from "react-router-dom";
+import "./signup-view.scss";
 
 export const SignupView = () => {
   const [username, setUsername] = useState("");
@@ -27,17 +28,20 @@ export const SignupView = () => {
       }
     }).then((response) => {
       if (response.ok) {
-        alert("Signup successful");
-        window.location.reload();
+        alert("Account created successfully");
+        window.location.assign("http://localhost:1234/login");
       } else {
         alert("Signup failed");
       }
+    })
+    .catch((error) => {
+      alert(error);
     });
   };
 
   return (
     <div>
-      <h3 className="text-center my-3">Create Account</h3>
+      <p className="text-center mt-4 mb-5">Welcome to <span className="signup-title text-center">myFlix</span></p>
       <Form onSubmit ={handleSubmit}>
       <Form.Group controlId="formUsername" className="mb-3">
         <Form.Label>Username: </Form.Label>
@@ -82,8 +86,14 @@ export const SignupView = () => {
           required
         />
       </Form.Group>
-
-      <Button type="submit" className="signup-button" variant="primary">Create Account</Button>
+      <div className="d-flex justify-content-between">
+        <Button type="submit" className="signup-button" variant="primary">Create Account</Button>
+        <Link to="/login">
+          <Button variant="link">
+            Have an account? Sign in
+          </Button>
+        </Link>
+      </div>
     </Form>
   </div>
   );
