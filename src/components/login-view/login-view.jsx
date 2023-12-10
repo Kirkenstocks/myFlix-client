@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-// import "./login-view.scss";
+import { Link } from "react-router-dom";
+import "./login-view.scss";
 
 export const LoginView = ({ onLoggedIn }) => {
   const [username, setUsername] = useState("");
@@ -32,14 +33,14 @@ export const LoginView = ({ onLoggedIn }) => {
           alert("No such user");
         }
       })
-      .catch((e) => {
-        alert("Something went wrong");
+      .catch((error) => {
+        alert(error);
       });
   };
 
   return (
     <div>
-      <h3 className="text-center my-3">Sign In</h3>
+      <p className="text-center mt-4 mb-5">Welcome to <span className="login-title text-center">myFlix</span></p>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formUsername">
           <Form.Label>Username:</Form.Label>
@@ -62,13 +63,19 @@ export const LoginView = ({ onLoggedIn }) => {
             required
           />
         </Form.Group>
-      
-        <Button
-          type="submit"
-          className="login-button"
-        >
-          Sign In
-        </Button>
+        <div className="d-flex justify-content-between">
+          <Button
+            type="submit"
+            className="login-button"
+          >
+            Sign In
+          </Button>
+          <Link to="/signup">
+            <Button variant="link" >
+              New user? Create an account!
+            </Button>
+          </Link>
+        </div>
       </Form>
     </div>
   );

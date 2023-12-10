@@ -1,3 +1,9 @@
+$primary: DeepSkyBlue;
 
+@import '~bootstrap/scss/bootstrap.scss';
 
-//@import '~bootstrap/scss/bootstrap.scss';
+.signup-title {
+  display: block;
+  color: $primary;
+  font-size: 8vw;
+}

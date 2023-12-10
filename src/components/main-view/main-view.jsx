@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
@@ -9,7 +8,6 @@ import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
 import { ProfileView } from "../profile-view/profile-view";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
-// import "./main-view.scss";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -25,7 +23,7 @@ export const MainView = () => {
     }
 
     fetch("https://myflixapi-3voc.onrender.com/movies", {
-      headers: { Authorization: `Bearer ${token}`}
+      headers: { Authorization: `Bearer ${token}` }
     })
       .then((response) => response.json())
         .then((data) => {
@@ -65,7 +63,7 @@ export const MainView = () => {
           localStorage.clear();
         }}
       />
-      <Row className="justify-content-sm-center">
+      <Row className="justify-content-center">
         <Routes>
           <Route 
             path="/signup"
@@ -107,7 +105,7 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
+                  <Col>Loading movies, this should just take a moment. If movies fail to load, check your connection and retry.</Col>
                 ) : (
                   <Col sm={8}>
                     <MovieView movies={movies} />
@@ -123,11 +121,11 @@ export const MainView = () => {
                 {!user ? (
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
-                  <Col>The list is empty!</Col>
+                  <Col>Loading movies, this should just take a moment. If movies fail to load, check your connection and retry.</Col>
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.id} md={3}>
+                      <Col className="mb-4" key={movie.id} lg={3} md={4} sm={6} xs={9}>
                         <MovieCard 
                           movie={movie}
                           user={user}
@@ -149,9 +147,13 @@ export const MainView = () => {
                 ): (
                   <ProfileView 
                     user={user}
-                    token={token}
                     setUser={setUser}
-                    movies={movies} 
+                    movies={movies}
+                    onDelete={() => {
+                      setUser(null);
+                      setToken(null);
+                      localStorage.clear();
+                    }}
                   />
                 )}
               </>
