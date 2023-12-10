@@ -18,7 +18,7 @@ export const DeleteAccountModal = ({ handleDelete }) => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Delete Account</Modal.Title>
+          <Modal.Title>Account deletion is permanent!</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete your account?</Modal.Body>
         <Modal.Footer>
