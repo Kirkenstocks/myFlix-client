@@ -7,7 +7,7 @@ import { MovieCard } from "../movie-card/movie-card";
 import { DeleteAccountModal } from "../delete-account-modal/delete-account-modal";
 import "./profile-view.scss";
 
-export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handleShow, handleClose } ) => {
+export const ProfileView = ( { user, token, setUser, movies, onDelete } ) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -32,17 +32,15 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
         Authorization: `Bearer ${storedToken}`,
         "Content-Type": "application/json"
       }
-    }).then((response) => {
+    }).then(async (response) => {
       if (response.ok) {
         alert("Profile updated successfully");
-      } else {
-        alert("Unable to update profile");
-      }
-    }).then((updatedUser) => {
-      if (updatedUser) {
+        const updatedUser = await response.json();
         localStorage.setItem("user", JSON.stringify(updatedUser));
         setUser(updatedUser);
         window.location.reload();
+      } else {
+        alert("Unable to update profile.");
       }
     });
   };
@@ -58,14 +56,14 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
       }
     }).then((response) => {
       if (response.ok) {
-        {onLoggedOut};
+        {onDelete};
         alert("Account deleted successfully");
-        window.location.replace("/signup");
+        window.location.replace("http://localhost:1234/login");
       } else {
         alert("Unable to delete account");
       }
-    })
-  }
+    });
+  };
 
   //get a list of the user's favorite movies
   const favoriteMovies = movies.filter(movie => user.FavoriteMovies.includes(movie.id));
@@ -73,10 +71,9 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
  
   return (
     <>
-      <Row>
+      <Row className="justify-content-center">
       <Col md={6}>
         <h3 className="my-3 text-center">Account Information</h3>
-        
         <Form className="update-info-form p-3" onSubmit={handleUpdate}>
           <Form.Group controlId="formUsername">
             <Form.Label>Username: </Form.Label>
@@ -121,6 +118,7 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
               value={birthday}
               onChange={(e) => setBirthday(e.target.value)}
               className="mb-4"
+              required
             />
           </Form.Group>
           <div className="d-flex justify-content-between">
@@ -129,16 +127,15 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
               handleDelete={handleDelete}
               className="modal-button" 
             />
-          </div>
-             
+          </div> 
         </Form> 
       </Col>
     </Row>
-    <Row>
+    <Row className="justify-content-around">
       <h3 className="mt-5 mb-3 text-center">Favorite Movies</h3>
         {favoriteMovies.map((movie) => {
           return (
-            <Col key={movie.id} md={4} className="mb-4">
+            <Col key={movie.id} md={4} sm={6} className="mb-4">
               <MovieCard 
                 movie={movie} 
                 user={user}
@@ -149,6 +146,5 @@ export const ProfileView = ( { user, token, setUser, movies, onLoggedOut, handle
         )})}
     </Row>
     </>
-    
   );
 };
