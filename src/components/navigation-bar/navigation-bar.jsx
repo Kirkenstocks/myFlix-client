@@ -1,10 +1,14 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-// import "./navigation-bar.scss";
 
-export const NavigationBar = ({ user, onLoggedOut }) => {
+export const NavigationBar = ({ user, onLoggedOut, searchQuery, setSearchQuery }) => {
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
   return (
-    <Navbar bg="dark" expand="sm">
+    <Navbar bg="dark" expand="md">
       <Container>
         <Navbar.Brand as={Link} to="/" className="navbar-title" style={{ color: "#00bfff", fontWeight: "bold" }}>
           myFlix
@@ -24,13 +28,26 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
             )}
             {user && (
               <>
-                <Nav.Link as={Link} to="/">
+                <Form inline>
+                  <Row>
+                    <Col xs="auto">
+                      <Form.Control
+                        type="text"
+                        placeholder="Search"
+                        className="ms-md-3 me-3 w-75"
+                        value={searchQuery}
+                        onChange={handleSearch}
+                      />
+                    </Col>
+                  </Row>
+                </Form>
+                <Nav.Link as={Link} to="/" className="ms-md-3">
                   Home
                 </Nav.Link>
-                <Nav.Link as={Link} to="/profile">
+                <Nav.Link as={Link} to="/profile" className="ms-md-3">
                   Account
-                </Nav.Link>
-                <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
+                </Nav.Link>         
+                <Nav.Link onClick={onLoggedOut} className="ms-md-3">Logout</Nav.Link>
               </>
             )}
           </Nav>
