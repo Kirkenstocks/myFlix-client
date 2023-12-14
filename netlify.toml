@@ -4,9 +4,7 @@
   status = 200
 
 [[headers]]
-  for = "/"
+  for = "/*"
   [headers.values]
-  cache-control = '''
-  public,
-  max-age=31556926,
-  '''
+  cache-control = "public, max-age=31556926"
+ 
