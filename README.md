@@ -12,7 +12,7 @@ If you want to run the application locally, download the repository, navigate to
 or you can use the script:
 `npm run start`
 Alternatively, you can visit the live hosted app at:
-[]()
+[https://myflix-sw.netlify.app](https://myflix-sw.netlify.app).
 
 
 ## Credits:
