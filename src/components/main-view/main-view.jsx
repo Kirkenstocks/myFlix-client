@@ -12,9 +12,11 @@ import { NavigationBar } from "../navigation-bar/navigation-bar";
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
+
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   //importing data from API
   useEffect(() => {
@@ -52,6 +54,12 @@ export const MainView = () => {
         });
   },[token]);
 
+  const filteredMovies = movies.filter(movie => {
+    if (searchQuery) {
+      return movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    }
+  });
+
   //display on page
   return (
     <BrowserRouter>
@@ -62,6 +70,10 @@ export const MainView = () => {
           setToken(null);
           localStorage.clear();
         }}
+        movies={movies}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        filteredMovies={filteredMovies}
       />
       <Row className="justify-content-center">
         <Routes>
@@ -122,10 +134,10 @@ export const MainView = () => {
                   <Navigate to="/login" replace />
                 ) : movies.length === 0 ? (
                   <Col>Loading movies, this should just take a moment. If movies fail to load, check your connection and retry.</Col>
-                ) : (
-                  <>
-                    {movies.map((movie) => (
-                      <Col className="mb-4" key={movie.id} lg={3} md={4} sm={6} xs={9}>
+                ) : searchQuery ? (
+                  <Row>
+                    {filteredMovies.map((movie) => (
+                      <Col className="mb-4" key={movie.id} lg={3} md={4} sm={6} xs={10}>
                         <MovieCard 
                           movie={movie}
                           user={user}
@@ -133,7 +145,19 @@ export const MainView = () => {
                         />
                       </Col>
                     ))}
-                  </>
+                  </Row>
+                ) : (                
+                  <Row>
+                    {movies.map((movie) => (
+                      <Col className="mb-4" key={movie.id} lg={3} md={4} sm={6} xs={10}>
+                        <MovieCard 
+                          movie={movie}
+                          user={user}
+                          setUser={setUser} 
+                        />
+                      </Col>
+                    ))}
+                  </Row>                 
                 )}
               </>
             }
