@@ -58,7 +58,8 @@ export const ProfileView = ( { user, token, setUser, movies, onDelete } ) => {
       if (response.ok) {
         {onDelete};
         alert("Account deleted successfully");
-        window.location.replace("http://localhost:1234/login");
+        // window.location.replace("http://localhost:1234/login");
+        window.location.replace("https://myflix-sw.netlify.app/login");
       } else {
         alert("Unable to delete account");
       }
