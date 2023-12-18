@@ -29,7 +29,8 @@ export const SignupView = () => {
     }).then((response) => {
       if (response.ok) {
         alert("Account created successfully");
-        window.location.assign("http://localhost:1234/login");
+        // window.location.assign("http://localhost:1234/login");
+        window.location.assign("https://myflix-sw.netlify.app/login");
       } else {
         alert("Signup failed");
       }
