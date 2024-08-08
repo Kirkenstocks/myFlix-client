@@ -1,7 +1,9 @@
 # myFlix
 
 ## Description:
-This is the client side of a movie database SPA that allows users to look up information about included movies, create a profile, and save favorite movies to their profile. The backend code can be found in my movie_api repository.
+This is the client side of a movie database SPA that allows users to look up information about included movies, create a profile, and save favorite movies to their profile. The backend code can be found in my movie_api repository.  
+
+**Note: On first use the app may take up to 30 seconds to spin up. Please try again if you receieve an error when first signing up/logging in.**
 
 ## Dependencies and Technologies:
 This app was built with React and utilizes React-Bootstrap for styling. It utilizes the MERN (MongoDB, Express.js, React, Node.js) stack along with the backend I created in the movie_api repository, and represents my first full-stack application! Live hosting is provided by Netlify.
